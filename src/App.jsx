@@ -17,6 +17,12 @@ import OnboardingReports from './components/pages/OnboardingReports';
 import TransactionReports from './components/pages/TransactionReports';
 import WalletAdjustment from './components/pages/WalletAdjustment';
 
+const ProtectedRoute = ({ children }) => {
+    const token = localStorage.getItem('access_token');
+    if (!token) return <Navigate to="/login" replace />;
+    return children;
+};
+
 function App() {
   return (
     <Router>
@@ -25,7 +31,12 @@ function App() {
         <Route path="/login" element={<AuthSystem />} />
 
         {/* 2. DASHBOARD ROUTES (Layout Wrapper) */}
-        <Route path="/dashboard" element={<DashboardLayout />}>
+       <Route path="/dashboard" element={
+            <ProtectedRoute>
+                <DashboardLayout />
+            </ProtectedRoute>
+        }>
+
           <Route index element={<DashboardHome />} />
           
           {/* User Management */}
