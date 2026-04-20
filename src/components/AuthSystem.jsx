@@ -36,55 +36,50 @@ const AuthSystem = () => {
 
 const handleLogin = async (e) => {
   e.preventDefault();
-  if (!username || !password) return alert("Please fill in all fields");
+  
+  // 1. Trim inputs immediately to remove accidental leading/trailing spaces
+  const cleanUsername = username.trim();
+  const cleanPassword = password.trim();
+
+  if (!cleanUsername || !cleanPassword) return alert("Please fill in all fields");
 
   setLoading(true);
 
   try {
-    // --- LOGIN FLOW ---
-    // 1. Encrypt Credentials
+    localStorage.clear(); 
+
+    // 2. Use trimmed values for encryption
     const encryptedCreds = await getEncryptedData({
       grant_type: "password",
-      username,
-      password
+      username: cleanUsername,
+      password: cleanPassword
     });
+    
     const loginPayload = typeof encryptedCreds === 'object' ? encryptedCreds.RequestData : encryptedCreds;
 
-    // 2. Call Bank Login
     const loginResp = await performBankLogin(loginPayload);
 
-    // 3. Decrypt Login Response to get Token
     const loginEncryptedData = loginResp.data.RequestData || loginResp.data;
     const loginDecrypted = await getDecryptedData(loginEncryptedData);
 
     if (loginDecrypted && loginDecrypted.access_token) {
       const token = loginDecrypted.access_token;
       
-      // Save login details
       localStorage.setItem('access_token', token);
       localStorage.setItem('user_details', JSON.stringify(loginDecrypted));
 
-      // --- DASHBOARD FLOW ---
-      // 4. Call Dashboard API using the new token
       const dashboardResp = await performDashboardFetch(token);
-
-      // 5. Decrypt Dashboard Response
-      // dashboardResp.data is likely the encrypted string "IDqf5g8w..."
       const dashboardDecrypted = await getDecryptedData(dashboardResp.data);
 
-      // Save dashboard data for use in the Home page
       localStorage.setItem('dashboard_stats', JSON.stringify(dashboardDecrypted));
-
-      console.log("Dashboard Data Loaded:", dashboardDecrypted);
       
-      // Finally, navigate
       navigate('/dashboard');
     } else {
       alert("Login failed or session invalid");
     }
   } catch (err) {
     console.error("Integration Error:", err);
-    alert("System Error during Login/Dashboard fetch");
+    alert("System Error: Please check your credentials.");
   } finally {
     setLoading(false);
   }

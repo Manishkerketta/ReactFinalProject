@@ -16,6 +16,10 @@ import Functionalities from './components/pages/Functionalities';
 import OnboardingReports from './components/pages/OnboardingReports';
 import TransactionReports from './components/pages/TransactionReports';
 import WalletAdjustment from './components/pages/WalletAdjustment';
+import CreateCBCUser from './components/pages/CreateCBCUser';
+
+// 1. IMPORT THE NEW PROFILE DETAILS COMPONENT
+import ProfileDetails from './components/pages/ProfileDetails';
 
 const ProtectedRoute = ({ children }) => {
     const token = localStorage.getItem('access_token');
@@ -27,37 +31,42 @@ function App() {
   return (
     <Router>
       <Routes>
-        {/* 1. AUTH ROUTES */}
+        {/* AUTHENTICATION */}
         <Route path="/login" element={<AuthSystem />} />
 
-        {/* 2. DASHBOARD ROUTES (Layout Wrapper) */}
-       <Route path="/dashboard" element={
+        {/* PROTECTED DASHBOARD ROUTES */}
+        <Route path="/dashboard" element={
             <ProtectedRoute>
                 <DashboardLayout />
             </ProtectedRoute>
         }>
-
+          {/* Default Landing */}
           <Route index element={<DashboardHome />} />
           
-          {/* User Management */}
+          {/* User Management Section */}
+          <Route path="create-cbc" element={<CreateCBCUser />} />
           <Route path="user-request" element={<UserRequest />} />
+          
+          {/* 2. ADDED PROFILE DETAILS ROUTE (Accessible from User Request) */}
+          <Route path="profile-details" element={<ProfileDetails />} />
+          
           <Route path="user-list" element={<UserListReport />} />
           <Route path="functionalities" element={<Functionalities />} />
           
-          {/* Audit Trail */}
+          {/* Audit & Logs */}
           <Route path="audit-trail" element={<AuditTrail />} />
 
-          {/* Reports Section */}
+          {/* Reports Sub-routes */}
           <Route path="reports">
             <Route path="onboarding" element={<OnboardingReports />} />
             <Route path="transaction" element={<TransactionReports />} />
           </Route>
 
-          {/* Wallet Adjustment - MOVED INSIDE DASHBOARD LAYOUT */}
+          {/* Wallet Section */}
           <Route path="wallet-adjustment" element={<WalletAdjustment />} />
         </Route>
 
-        {/* 3. REDIRECTS */}
+        {/* REDIRECTS & 404 */}
         <Route path="/" element={<Navigate to="/login" replace />} />
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>

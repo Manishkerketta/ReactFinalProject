@@ -98,3 +98,29 @@ export const fetchUserList = async (encryptedPayload) => {
     }
   );
 };
+
+/**
+ * 6. USER REQUEST LIST - PLAIN FETCH (For ROLE_OPS_MAKER)
+ * This hits the apidev (SDK) endpoint without encryption as requested.
+ */
+export const fetchUserListPlain = async (payload) => {
+  const token = localStorage.getItem('access_token');
+  return await axios.post(
+    'https://apidev.iserveu.online/NSDL/user_onboarding/fetch-user-list',
+    payload, // Sending plain JSON body
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token,
+      }
+    }
+  );
+};
+export const fetchUserDetails = async (username, userRole) => {
+  const token = localStorage.getItem('access_token');
+  return await axios.post(
+    'https://apidev.iserveu.online/NSDL/user_onboarding/fetch-user-details',
+    { username, userRole },
+    { headers: { 'Authorization': token, 'Content-Type': 'application/json' } }
+  );
+};
