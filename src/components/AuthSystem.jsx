@@ -2,152 +2,99 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, Loader2 } from 'lucide-react';
 import nsdl_logo from '../assets/nsdl_logo.png';
-// Importing the modular functions we created
-import { getEncryptedData, performBankLogin, getDecryptedData } from '../utils/authService';
+import { getEncryptedData, performBankLogin, getDecryptedData, performDashboardFetch } from '../utils/authService';
+
+// 1. MOVE CardWrapper OUTSIDE THE MAIN COMPONENT
+const CardWrapper = ({ children }) => (
+  <div className="h-screen w-full bg-[#FBFBFB] flex items-center justify-center font-sans overflow-hidden relative">
+    <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
+      <div className="absolute -left-40 top-1/4 w-[600px] h-[800px] bg-red-900 opacity-10 blur-[120px] rounded-full rotate-12"></div>
+    </div>
+    <div className="relative z-10 flex flex-col items-center w-full px-4">
+      <div className="w-full max-w-[475px] min-h-[521px] bg-white rounded-[10px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 flex flex-col items-center p-10">
+        <div className="w-[274px] h-[64px] mb-8">
+          <img src={nsdl_logo} alt="NSDL" className="w-full h-full object-contain" />
+        </div>
+        {children}
+      </div>
+      <div className="mt-8 flex gap-8 text-[12px] text-gray-400">
+        <span className="hover:underline cursor-pointer">Terms and Conditions</span>
+        <span className="hover:underline cursor-pointer">Privacy Policy</span>
+        <span className="hover:underline cursor-pointer">CA Privacy Notice</span>
+      </div>
+    </div>
+  </div>
+);
 
 const AuthSystem = () => {
   const navigate = useNavigate();
-  const [step, setStep] = useState('login'); // login, forgot, otp, success
+  const [step, setStep] = useState('login');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-
-  // Dynamic input states
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  // The Integrated Login Logic
-  // const handleLogin = async (e) => {
-  //   e.preventDefault();
-  //   if (!username || !password) return alert("Please fill in all fields");
-
-  //   setLoading(true);
-
-  //   try {
-  //     // 1. Get encrypted payload from your utility
-  //     const loginPayload = {
-  //       grant_type: "password",
-  //       username: username,
-  //       password: password
-  //     };
-      
-  //     const encryptionResponse = await getEncryptedData(loginPayload);
-
-  //     /**
-  //      * FIX: The Bank API expects RequestData to be a STRING, not an OBJECT.
-  //      * If your encr utility returns { RequestData: "xyz" }, we must extract "xyz".
-  //      */
-  //     const encryptedStringOnly = typeof encryptionResponse === 'object' 
-  //       ? encryptionResponse.RequestData 
-  //       : encryptionResponse;
-
-  //     // 2. Pass that clean string to the Bank API
-  //     const bankResponse = await performBankLogin(encryptedStringOnly);
-
-  //     /**
-  //      * 3. Decrypt the response coming back from the bank
-  //      * The bank usually returns { RequestData: "encrypted_response_string" }
-  //      */
-  //     const encryptedResponseData = bankResponse.data.RequestData || bankResponse.data;
-      
-  //     // Ensure we are passing a string to the decr utility
-  //     const finalData = await getDecryptedData(
-  //       typeof encryptedResponseData === 'object' 
-  //         ? encryptedResponseData.RequestData 
-  //         : encryptedResponseData
-  //     );
-
-  //     if (finalData.access_token) {
-  //       // Save session
-  //       localStorage.setItem('access_token', finalData.access_token);
-  //       localStorage.setItem('user_details', JSON.stringify(finalData));
-        
-  //       // Success: Route to dashboard
-  //       navigate('/dashboard');
-  //     } else {
-  //       alert(finalData.message || "Invalid credentials. Please try again.");
-  //     }
-  //   } catch (err) {
-  //     console.error("Auth Flow Error:", err);
-  //     // Checking for the specific unmarshalling error in the console if it happens again
-  //     alert("System error. Please check your credentials or connection.");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-  const handleLogin = async (e) => {
+const handleLogin = async (e) => {
   e.preventDefault();
   if (!username || !password) return alert("Please fill in all fields");
 
   setLoading(true);
 
   try {
-    // 1. ENCRYPT
-    const encryptionResponse = await getEncryptedData({
+    // --- LOGIN FLOW ---
+    // 1. Encrypt Credentials
+    const encryptedCreds = await getEncryptedData({
       grant_type: "password",
-      username: username,
-      password: password
+      username,
+      password
     });
+    const loginPayload = typeof encryptedCreds === 'object' ? encryptedCreds.RequestData : encryptedCreds;
 
-    const encryptedStringOnly = typeof encryptionResponse === 'object' 
-      ? encryptionResponse.RequestData 
-      : encryptionResponse;
+    // 2. Call Bank Login
+    const loginResp = await performBankLogin(loginPayload);
 
-    // 2. LOGIN
-    const bankResponse = await performBankLogin(encryptedStringOnly);
+    // 3. Decrypt Login Response to get Token
+    const loginEncryptedData = loginResp.data.RequestData || loginResp.data;
+    const loginDecrypted = await getDecryptedData(loginEncryptedData);
 
-    // 3. DECRYPT
-    // Most bank APIs return the encrypted payload inside "RequestData"
-    const encryptedBodyFromServer = bankResponse.data.RequestData || bankResponse.data;
-
-    // We pass the encrypted chunk to our decryption utility
-    const finalData = await getDecryptedData(encryptedBodyFromServer);
-
-    // If finalData is the object you shared (with access_token)
-    if (finalData && finalData.access_token) {
-      localStorage.setItem('access_token', finalData.access_token);
-      localStorage.setItem('user_details', JSON.stringify(finalData));
+    if (loginDecrypted && loginDecrypted.access_token) {
+      const token = loginDecrypted.access_token;
       
-      console.log("Login Successful, Token received");
+      // Save login details
+      localStorage.setItem('access_token', token);
+      localStorage.setItem('user_details', JSON.stringify(loginDecrypted));
+
+      // --- DASHBOARD FLOW ---
+      // 4. Call Dashboard API using the new token
+      const dashboardResp = await performDashboardFetch(token);
+
+      // 5. Decrypt Dashboard Response
+      // dashboardResp.data is likely the encrypted string "IDqf5g8w..."
+      const dashboardDecrypted = await getDecryptedData(dashboardResp.data);
+
+      // Save dashboard data for use in the Home page
+      localStorage.setItem('dashboard_stats', JSON.stringify(dashboardDecrypted));
+
+      console.log("Dashboard Data Loaded:", dashboardDecrypted);
+      
+      // Finally, navigate
       navigate('/dashboard');
     } else {
-      alert("Decryption failed or invalid credentials");
+      alert("Login failed or session invalid");
     }
   } catch (err) {
-    console.error("Auth Flow Error:", err);
-    alert("Login Error: " + (err.response?.data?.error || "Check console"));
+    console.error("Integration Error:", err);
+    alert("System Error during Login/Dashboard fetch");
   } finally {
     setLoading(false);
   }
 };
-
-  // Wrapper for consistency across all auth screens
-  const CardWrapper = ({ children }) => (
-    <div className="h-screen w-full bg-[#FBFBFB] flex items-center justify-center font-sans overflow-hidden relative">
-      <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
-        <div className="absolute -left-40 top-1/4 w-[600px] h-[800px] bg-red-900 opacity-10 blur-[120px] rounded-full rotate-12"></div>
-      </div>
-      <div className="relative z-10 flex flex-col items-center w-full px-4">
-        <div className="w-full max-w-[475px] min-h-[521px] bg-white rounded-[10px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 flex flex-col items-center p-10">
-          <div className="w-[274px] h-[64px] mb-8">
-            <img src={nsdl_logo} alt="NSDL" className="w-full h-full object-contain" />
-          </div>
-          {children}
-        </div>
-        <div className="mt-8 flex gap-8 text-[12px] text-gray-400">
-          <span className="hover:underline cursor-pointer">Terms and Conditions</span>
-          <span className="hover:underline cursor-pointer">Privacy Policy</span>
-          <span className="hover:underline cursor-pointer">CA Privacy Notice</span>
-        </div>
-      </div>
-    </div>
-  );
 
   if (step === 'login') {
     return (
       <CardWrapper>
         <h2 className="text-[24px] font-bold text-[#1A1A1A] mb-6">Login to your Account</h2>
         <form className="w-full max-w-[395px] space-y-6" onSubmit={handleLogin}>
-          {/* Username */}
           <div className="flex flex-col gap-1.5 text-left">
             <label className="text-[14px] text-gray-500 font-medium">Username</label>
             <input 
@@ -156,10 +103,10 @@ const AuthSystem = () => {
               className="w-full h-[50px] px-4 border border-gray-200 rounded-md outline-none focus:border-red-800"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
+              autoFocus // Optional: good for UX
               required 
             />
           </div>
-          {/* Password */}
           <div className="flex flex-col gap-1.5 text-left">
             <label className="text-[14px] text-gray-500 font-medium">Password</label>
             <div className="relative">
@@ -176,7 +123,6 @@ const AuthSystem = () => {
               </button>
             </div>
           </div>
-          {/* Submit Button */}
           <button 
             type="submit" 
             disabled={loading}
@@ -197,6 +143,7 @@ const AuthSystem = () => {
     );
   }
 
+  // ... (forgot, otp, success steps)
   if (step === 'forgot') {
     return (
       <CardWrapper>
@@ -240,6 +187,15 @@ const AuthSystem = () => {
       </CardWrapper>
     );
   }
+
+  return null;
 };
 
 export default AuthSystem;
+
+
+
+
+
+
+

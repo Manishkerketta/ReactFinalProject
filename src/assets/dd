@@ -1,0 +1,451 @@
+{
+    "message": "Data fetched successfully",
+    "resultObj": {
+        "message": "Data fetched successfully",
+        "result": [
+            {
+                "1": {
+                    "area": "near KIIT",
+                    "city": "Bhubaneswar Cuttack",
+                    "country": "India",
+                    "district": "Khorda",
+                    "dob": "15/08/1999",
+                    "email": "srii364456@gmail.com",
+                    "firstName": "srii",
+                    "lastName": "sen",
+                    "middleName": "",
+                    "mobileNumber": "9861655884",
+                    "permanentAddress1": "srb tower, near KIIT college",
+                    "permanentAddress2": "infocity sqare,",
+                    "permanentAddress3": "patia,Bhubaneswar",
+                    "pinCode": "754002",
+                    "state": "Andaman And Nicobar Islands"
+                },
+                "2": {
+                    "businessAddress": "patiaainfocitySquareBhubaneswar",
+                    "businessArea": "kiit",
+                    "businessCity": "patia",
+                    "businessDistrict": "khorda",
+                    "businessName": "iServeU software pvt ltd",
+                    "businessPincode": "754002",
+                    "businessProof": "Aadhaar",
+                    "businessState": "west bengal",
+                    "gstNumber": "abcdabcdabcdabcd1234",
+                    "revenueCenter": "revenue",
+                    "workingShift": "9"
+                },
+                "3": {
+                    "accountNumber": "501037016368",
+                    "nomineeDetails": "mamata"
+                },
+                "4": {
+                    "aadhaar": "111122223354",
+                    "aadhaarBackImage": "test aadhaar back image",
+                    "aadhaarFrontImage": "test aadhaar front image",
+                    "pan": "FLKQI9039M",
+                    "panImage": "test pan image"
+                },
+                "5": {
+                    "tAddress": "test terminal",
+                    "tAddress1": "test termainal ad1",
+                    "tCity": "test city 1",
+                    "tEmail": "testagent1@gmail.com",
+                    "tPincode": "754002",
+                    "tState": "test state 1",
+                    "tposSerialNumber": "9861655884"
+                },
+                "6": {
+                    "AdditionDoc": "asdd",
+                    "affiliationFee": "123",
+                    "alternateNumber": "1231231233",
+                    "bcAgentForm": "test form",
+                    "businessProposal": "adsad",
+                    "entityId": "asdsads",
+                    "productFeatures": [
+                        {
+                            "featureName": "UPI_DIRECT",
+                            "id": "54"
+                        },
+                        {
+                            "featureName": "DMT",
+                            "id": "25"
+                        },
+                        {
+                            "featureName": "BBPS",
+                            "id": "52"
+                        },
+                        {
+                            "featureName": "WALLETCASHOUT",
+                            "id": "68"
+                        },
+                        {
+                            "featureName": "UPI_ADM_AGR",
+                            "id": "53"
+                        },
+                        {
+                            "featureName": "WALLETCASHOUT_NEFT",
+                            "id": "60"
+                        },
+                        {
+                            "featureName": "WALLETCASHOUT_IMPS",
+                            "id": "50"
+                        },
+                        {
+                            "featureName": "UnifiedAEPS",
+                            "id": "61"
+                        },
+                        {
+                            "featureName": "ACCOUNT_OPENING",
+                            "id": "100"
+                        },
+                        {
+                            "featureName": "MATM",
+                            "id": "48"
+                        }
+                    ],
+                    "telephone": "022-1234543",
+                    "termsAndCondition": "asdasdas"
+                },
+                "__v": 0,
+                "_id": "AG000052",
+                "activeStatus": 0,
+                "activeStatusRemarks": {
+                    "comments": "",
+                    "requestedBy": "",
+                    "updatedBy": ""
+                },
+                "addPartnerApiStatus": "PENDING",
+                "agentType": "Agent",
+                "approvedBy": "",
+                "approved_level": "REJECTED BY OPS_CHECKER",
+                "bankCode": "NSDL",
+                "bcAgentId": "",
+                "bcAgentRegistrationApiStatus": "PENDING",
+                "createdAt": 1768303553763,
+                "createdBy": "CBCM000036",
+                "featureApiStatus": "PENDING",
+                "javaAgentOnboardApiStatus": "PENDING",
+                "key": "",
+                "parentBcId": "1578",
+                "parentBcObjectId": "CBC000096",
+                "parentUserId": "CBCM000036",
+                "parentpartnerId": "CXrliYmqc2",
+                "partnerId": "",
+                "productFeatureRemarks": {
+                    "comments": "",
+                    "isApprovedOrRejected": "PENDING",
+                    "newlyAssignedFeatures": [],
+                    "requestedBy": "",
+                    "updatedBy": ""
+                },
+                "productFeatureUpdateReq": false,
+                "remarks": {
+                    "comments": "Rejected",
+                    "description": "Rejected"
+                },
+                "status": "REJECTED",
+                "status_code": 5,
+                "superAdmin": "CBC000096",
+                "updatedAt": 1776621534431,
+                "updatedBy": "CBCM000036",
+                "userRole": "ROLE_RETAILER",
+                "username": "AG000052"
+            },
+            {
+                "1": {
+                    "addressLine1": "Navi Mumbai",
+                    "addressLine2": "Mumbai",
+                    "area": "Mumbai",
+                    "city": "Mumbai GPO",
+                    "companyName": "IserveU",
+                    "country": "India",
+                    "district": "MUMBAI",
+                    "dob": "01/04/2008",
+                    "email": "suhanikhanna@yopmail.com",
+                    "firstName": "Suhani",
+                    "lastName": "Khanna",
+                    "middleName": "",
+                    "mobileNumber": "9876968576",
+                    "pan": "CFUBC7745D",
+                    "pincode": "400001",
+                    "state": "Maharashtra"
+                },
+                "2": {
+                    "shopAddress": "Bengaluru",
+                    "shopArea": "Bengaluru",
+                    "shopCity": "Bengaluru East",
+                    "shopDistrict": "BENGALURU",
+                    "shopPinCode": "560001",
+                    "shopState": "Karnataka"
+                },
+                "3": {
+                    "alternateNumber": "7674563524",
+                    "bcAgentForm": "BC",
+                    "productFeatures": [
+                        {
+                            "featureName": "ACCOUNT_OPENING",
+                            "id": "100"
+                        }
+                    ],
+                    "telephone": "0012-75865764"
+                },
+                "__v": 0,
+                "_id": "CBCM000080",
+                "activeStatus": 0,
+                "activeStatusRemarks": {
+                    "comments": "",
+                    "requestedBy": "",
+                    "updatedBy": ""
+                },
+                "approvedBy": "",
+                "approved_level": "REJECTED BY OPS_CHECKER",
+                "bankCode": "NSDL",
+                "bcAgentId": "",
+                "bcAgentRegistrationApiStatus": "PENDING",
+                "createdAt": 1775477669711,
+                "createdBy": "CBC000021",
+                "featureApiStatus": "PENDING",
+                "javaCbcMakerOnboardApiStatus": "PENDING",
+                "parentBcId": "1521",
+                "parentObjectId": "CBC000021",
+                "partnerId": "df3ydOoElA",
+                "productFeatureRemarks": {
+                    "comments": "",
+                    "isApprovedOrRejected": "PENDING",
+                    "newlyAssignedFeatures": [],
+                    "requestedBy": "",
+                    "updatedBy": ""
+                },
+                "productFeatureUpdateReq": false,
+                "remarks": {
+                    "comments": "testing",
+                    "description": "testing"
+                },
+                "status": "REJECTED",
+                "status_code": 5,
+                "superAdmin": "jagdish_super",
+                "updatedAt": 1776621180094,
+                "updatedBy": "CBC000021",
+                "userRole": "ROLE_ADMIN_MAKER",
+                "username": "CBCM000080"
+            },
+            {
+                "1": {
+                    "city": "Bhubaneswar",
+                    "country": "India",
+                    "district": "Khordha",
+                    "email": "gaurav@yopmail.com",
+                    "firstName": "Gaurav",
+                    "lastName": "Rana",
+                    "middleName": "",
+                    "mobileNumber": "7643822334",
+                    "pinCode": "751024",
+                    "state": "Odisha"
+                },
+                "2": {
+                    "businessAddress": "bhubaneswar",
+                    "ceoName": "appleCEO",
+                    "companyName": "Fakeapple",
+                    "faxNumber": "",
+                    "gstNumber": "22AAAAA1234A1Z5",
+                    "institutionType": "INDIVIDUAL",
+                    "latitude": 20.341713,
+                    "longitude": 85.805772,
+                    "numberOfStaff": "5",
+                    "pan": "ABCDE1234F"
+                },
+                "3": {
+                    "adminEmail": "admin@yopmail.com",
+                    "adminMobileNumber": "8964363631",
+                    "adminName": "fakeadmin"
+                },
+                "4": {
+                    "accountNumber": "763827572822",
+                    "bankResolution": "dummybank.pdf"
+                },
+                "5": {
+                    "affiliationFee": "100",
+                    "agreementEndDate": "02/28/2026",
+                    "agreementStartDate": "01/01/2026",
+                    "authorizedSignatoryKyc": "KYC_ApplForm_p.pdf",
+                    "businessProposal": "BusinessProposals.pdf",
+                    "certificateOfIncorporationDocumentPdf": "certofincoporation.pdf",
+                    "entityPanCard": "ABCDE1234F",
+                    "firstAndLastPageAgreement": "firstpage.pdf",
+                    "incorporationAddress": "dubai",
+                    "lastPageAgreement": "lastpage.pdf",
+                    "productFeatures": [
+                        {
+                            "featureName": "UnifiedAEPS",
+                            "id": "61"
+                        },
+                        {
+                            "featureName": "ACCOUNT_OPENING",
+                            "id": "100"
+                        }
+                    ],
+                    "telephoneNumber": "011-543663",
+                    "termsAndConditions": "https://firebasestorage.googleapis.com/v0/b/los-stage-45550.appspot.com/o/NSDL%2Fops_maker%2Ffakeadmin%2Fterms.txt?alt=media&token=1a9249e9-79f1-4c57-b8ce-97be1ae45cd1"
+                },
+                "__v": 0,
+                "_id": "CBC000149",
+                "activeStatus": 0,
+                "activeStatusRemarks": {
+                    "comments": "",
+                    "requestedBy": "",
+                    "updatedBy": ""
+                },
+                "addPartnerApiStatus": "PENDING",
+                "approvedBy": "",
+                "approved_level": "REJECTED BY OPS_CHECKER",
+                "bankCode": "NSDL",
+                "bcRegistrationApiStatus": "PENDING",
+                "bc_id": "",
+                "createdAt": 1770787020606,
+                "createdBy": "ops_maker",
+                "featureApiStatus": "PENDING",
+                "javaCbcOnboardApiStatus": "PENDING",
+                "partnerId": "",
+                "productFeatureRemarks": {
+                    "comments": "",
+                    "isApprovedOrRejected": "PENDING",
+                    "newlyAssignedFeatures": [],
+                    "requestedBy": "",
+                    "updatedBy": ""
+                },
+                "productFeatureUpdateReq": false,
+                "remarks": {
+                    "comments": "Rejected",
+                    "description": "Rejected"
+                },
+                "status": "REJECTED",
+                "status_code": 5,
+                "superAdmin": "jagdish_super",
+                "updatedAt": 1776577283394,
+                "updatedBy": "ops_maker",
+                "userRole": "ROLE_ADMIN",
+                "username": "CBC000149"
+            },
+            {
+                "1": {
+                    "city": "Cuttack City",
+                    "country": "India",
+                    "district": "CUTTACK",
+                    "email": "deb@gmail.com",
+                    "firstName": "khitish",
+                    "lastName": "panda",
+                    "middleName": "",
+                    "mobileNumber": "9989897712",
+                    "pinCode": "754001",
+                    "state": "Odisha"
+                },
+                "2": {
+                    "businessAddress": "kjhgffghj",
+                    "ceoName": "uytrtyui",
+                    "companyName": "kjhgffrty",
+                    "faxNumber": "5555888555",
+                    "gstNumber": "22AAVVA1334A1Z5",
+                    "institutionType": "INDIVIDUAL",
+                    "numberOfStaff": "3",
+                    "pan": "GFCVR5444Y"
+                },
+                "3": {
+                    "adminEmail": "yyyyeret@gmail.com",
+                    "adminMobileNumber": "9873456787",
+                    "adminName": "devtestingyy"
+                },
+                "4": {
+                    "accountNumber": "687623456787654",
+                    "bankResolution": "https://firebasestorage.googleapis.com/v0/b/los-stage-45550.appspot.com/o/NSDL%2Fgourab_ops_maker%2Fdevtestingyy%2FbankResolution?alt=media&token=2fa06c3d-cd3c-4dd1-9409-f28c86342989"
+                },
+                "5": {
+                    "affiliationFee": "200",
+                    "agreementEndDate": "03/31/2025",
+                    "agreementStartDate": "03/27/2025",
+                    "authorizedSignatoryKyc": "https://firebasestorage.googleapis.com/v0/b/los-stage-45550.appspot.com/o/NSDL%2Fgourab_ops_maker%2Fdevtestingyy%2Fkyc?alt=media&token=22b9b8fd-174e-4109-9092-f6ea04cd73bc",
+                    "businessProposal": "https://firebasestorage.googleapis.com/v0/b/los-stage-45550.appspot.com/o/NSDL%2Fgourab_ops_maker%2Fdevtestingyy%2Fproposal?alt=media&token=9b644b6e-54ba-4fc4-8dd0-5ba444129b7d",
+                    "certificateOfIncorporationDocumentPdf": "https://firebasestorage.googleapis.com/v0/b/los-stage-45550.appspot.com/o/NSDL%2Fgourab_ops_maker%2Fdevtestingyy%2Fincorporation?alt=media&token=b01d461d-0c6c-4505-ab26-f462336c3c9c",
+                    "entityId": "wtyuwkd",
+                    "entityPanCard": "TRERR6768W",
+                    "firstAndLastPageAgreement": "https://firebasestorage.googleapis.com/v0/b/los-stage-45550.appspot.com/o/NSDL%2Fgourab_ops_maker%2Fdevtestingyy%2FagreementFirstPage?alt=media&token=5d0790d8-57df-4e6a-9cde-fe2e6f7d02e8",
+                    "incorporationAddress": "kjhtyui",
+                    "productFeatures": [
+                        {
+                            "featureName": "BBPS",
+                            "id": "52"
+                        },
+                        {
+                            "featureName": "WALLETCASHOUT",
+                            "id": "68"
+                        },
+                        {
+                            "featureName": "UnifiedAEPS",
+                            "id": "61"
+                        },
+                        {
+                            "featureName": "ACCOUNT_OPENING",
+                            "id": "100"
+                        }
+                    ],
+                    "telephoneNumber": "7874234567",
+                    "termsAndConditions": "https://firebasestorage.googleapis.com/v0/b/los-stage-45550.appspot.com/o/NSDL%2Fgourab_ops_maker%2Fdevtestingyy%2Fterms.txt?alt=media&token=a38f0a79-4e0d-4481-bb47-985aa5db0e2e"
+                },
+                "__v": 0,
+                "_id": "CBC000019",
+                "activeStatus": 1,
+                "activeStatusRemarks": {
+                    "comments": "Active",
+                    "previousStatus": 0,
+                    "requestedBy": "ops_maker",
+                    "requestedStatus": 1,
+                    "updatedBy": "ops_checker"
+                },
+                "approvedBy": "gourab_ops_checker",
+                "approved_level": "APPROVED BY OPS_CHECKER",
+                "bankCode": "NSDL",
+                "bc_id": "1520",
+                "createdAt": 1742884602191,
+                "createdBy": "gourab_ops_maker",
+                "productFeatureRemarks": {
+                    "comments": "Approved",
+                    "isApprovedOrRejected": "APPROVED",
+                    "newlyAssignedFeatures": [
+                        {
+                            "featureName": "BBPS",
+                            "id": "52"
+                        },
+                        {
+                            "featureName": "WALLETCASHOUT",
+                            "id": "68"
+                        },
+                        {
+                            "featureName": "UnifiedAEPS",
+                            "id": "61"
+                        },
+                        {
+                            "featureName": "ACCOUNT_OPENING",
+                            "id": "100"
+                        }
+                    ],
+                    "requestedBy": "gourab_ops_maker",
+                    "updatedBy": "ops_checker"
+                },
+                "productFeatureUpdateReq": false,
+                "remarks": {
+                    "comments": "iuytr",
+                    "description": "oiuy6"
+                },
+                "status": "APPROVED",
+                "status_code": 10,
+                "superAdmin": "jagdish_super",
+                "updatedAt": 1776252333576,
+                "updatedBy": "ops_maker",
+                "userRole": "ROLE_ADMIN",
+                "username": "CBC000019"
+            }
+        ],
+        "totalRecords": 4
+    },
+    "status_code": 200,
+    "success": true
+}

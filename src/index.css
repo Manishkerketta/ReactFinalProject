@@ -1,2 +1,52 @@
 
 @import 'tailwindcss';
+
+@import 'tailwindcss';
+
+/* Smooth Entry: Scale up and Fade in */
+@keyframes modalIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.95) translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Smooth Exit: Scale down and Fade out */
+@keyframes modalOut {
+  0% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+}
+
+/* Dropdown Animation */
+@keyframes dropdownSlide {
+  0% {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-modalIn {
+  animation: modalIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-modalOut {
+  animation: modalOut 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-dropdown {
+  animation: dropdownSlide 0.2s ease-out forwards;
+}
