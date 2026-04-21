@@ -68,13 +68,13 @@ const Sidebar = ({ isOpen }) => {
                                     </li>
                                 </Link>
                                 {/* HIDE USER LIST REPORT IF OPS MAKER (Show only for others like Checker) */}
-                                {!isOpsMaker && (
+                                {/* {!isOpsMaker && (
                                     <Link to="/dashboard/user-list">
                                         <li className={`pl-14 py-2 text-[14px] cursor-pointer transition-colors ${isActive('/dashboard/user-list') ? 'text-[#8B0000] font-bold' : 'text-gray-500 hover:text-[#8B0000]'}`}>
                                             User List Report
                                         </li>
                                     </Link>
-                                )}
+                                )} */}
                             </ul>
                         )}
                     </li>

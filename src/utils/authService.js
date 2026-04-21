@@ -124,3 +124,54 @@ export const fetchUserDetails = async (username, userRole) => {
     { headers: { 'Authorization': token, 'Content-Type': 'application/json' } }
   );
 };
+
+
+export const fetchUserDetailsEncr = async (encryptedPayload) => {
+  const token = localStorage.getItem('access_token');
+  return await axios.post(
+    'https://apidev-sdk.iserveu.online/NSDL/user_onboarding_report/fetch-user-details',
+    { RequestData: encryptedPayload },
+    {
+      headers: {
+        'Authorization': token,
+        'pass_key': 'QC62FQKXT2DQTO43LMWH5A44UKVPQ7LK5Y6HVHRQ3XTIKLDTB6HA',
+        'User-Agent': 'Web',
+        'Geo-Location': 'eyJkZXZpY2UiOiJXRUIiLCJsYXRpdHVkZSI6MjAuMzM3MDcwMjM4MjIyMzYzLCJsb25naXR1ZGUiOjg1LjgwOTU0NDM0NTUzMDQ0LCJjaXR5IjoiQmh1YmFuZXN3YXIiLCJjb3VudHJ5IjoiSW5kaWEiLCJjb250aW5lbnQiOiJBc2lhIn0=',
+        'Content-Type': 'application/json'
+      }
+    }
+  );
+};
+
+// src/utils/authService.js
+
+// ... existing functions ...
+
+/**
+ * Send OTP for Forgot Password
+ */
+export const sendForgotPasswordOtp = async (username) => {
+  return await axios.post(`https://services.iserveu.online/dev/nsdlab-internal/user-mgmt/utility/send-forgot-password-otp?userName=${username}`);
+};
+
+/**
+ * Verify OTP and Send Temporary Password
+ */
+export const verifyForgotPasswordOtp = async (otp, username) => {
+  // Assuming this API takes a POST body with otp and username
+  return await axios.post(`https://services.iserveu.online/dev/nsdlab-internal/user-mgmt/utility/verify-otp-send-temporary-password`, {
+    otp: otp,
+    userName: username
+  });
+};
+
+// export const performDashboardFetch = async (token) => {
+//   return await axios.get(`${BANK_API_BASE}/user-mgmt/user/dashboard`, {
+//     headers: {
+//       'Content-Type': 'application/json',
+//       'User-Agent': 'Web',
+//       'Geo-Location': 'eyJkZXZpY2UiOiJXRUIiLCJsYXRpdHVkZSI6MjAuMzM3MDcwMjM4MjIyMzYzLCJsb25naXR1ZGUiOjg1LjgwOTU0NDM0NTUzMDQ0LCJjaXR5IjoiQmh1YmFuZXN3YXIiLCJjb3VudHJ5IjoiSW5kaWEiLCJjb250aW5lbnQiOiJBc2lhIn0=',
+//       'Authorization': token 
+//     }
+//   });
+// };
