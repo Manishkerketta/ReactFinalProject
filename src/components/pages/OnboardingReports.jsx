@@ -1,9 +1,25 @@
 import React, { useState } from 'react';
-import { Search, Calendar, Download } from 'lucide-react';
+import { Search, Calendar, Download, FileSearch, Lock } from 'lucide-react';
 import DownloadModal from '../shared/DownloadModal';
 
 const OnboardingReports = () => {
   const [showModal, setShowModal] = useState(false);
+
+  // --- ROLE CHECK LOGIC ---
+  const savedUser = JSON.parse(localStorage.getItem('user_details'));
+  const isOpsChecker = savedUser?.roleName === "ROLE_OPS_CHECKER";
+
+  if (!isOpsChecker) {
+    return (
+      <div className="h-[60vh] flex flex-col items-center justify-center text-center p-6 bg-white rounded-lg border border-gray-100 shadow-sm">
+        <div className="w-20 h-20 bg-red-50 text-[#8B0000] rounded-full flex items-center justify-center mb-4">
+          <Lock size={40} />
+        </div>
+        <h2 className="text-2xl font-bold text-gray-800">Access Restricted</h2>
+        <p className="text-gray-500 max-w-md mt-2">Only authorized Personnel (Ops Checker) can access onboarding reports. Please contact your administrator for permissions.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-white rounded-lg shadow-sm border border-gray-100 min-h-full">
@@ -15,10 +31,10 @@ const OnboardingReports = () => {
         
         <div className="flex items-center gap-6 mb-8">
           <label className="flex items-center gap-2 text-sm font-medium cursor-pointer">
-            <input type="radio" name="onb-rep" defaultChecked className="text-[#8B0000]" /> Today Report
+            <input type="radio" name="onb-rep" defaultChecked className="accent-[#8B0000]" /> Today Report
           </label>
           <label className="flex items-center gap-2 text-sm text-gray-400 cursor-pointer">
-            <input type="radio" name="onb-rep" className="text-gray-300" /> Older Report
+            <input type="radio" name="onb-rep" className="accent-[#8B0000]" /> Older Report
           </label>
         </div>
 
@@ -26,56 +42,28 @@ const OnboardingReports = () => {
           <div className="relative"><Search className="absolute left-3 top-3 text-gray-400" size={18} /><input type="text" placeholder="Search here" className="w-full pl-10 pr-4 py-2.5 bg-gray-50 border rounded-md text-sm outline-none" /></div>
           <div className="relative"><Calendar className="absolute left-3 top-3 text-gray-400" size={18} /><input type="text" placeholder="Start date → End date" className="w-full pl-10 pr-4 py-2.5 bg-gray-50 border rounded-md text-sm outline-none" /></div>
           
-          {/* Added User Type Options */}
           <select className="bg-gray-50 border rounded-md px-3 text-sm text-gray-500 outline-none">
-            <option>User Type</option>
-            <option>CBC</option>
-            <option>CBC Maker</option>
-            <option>Master Distributor</option>
-            <option>Distributor</option>
-            <option>Agent</option>
+            <option>User Type</option><option>CBC</option><option>Agent</option>
           </select>
 
           <select className="bg-gray-50 border rounded-md px-3 text-sm text-gray-500 outline-none">
-            <option>Status</option>
-            <option>All</option>
-            <option>Approve</option>
-            <option>Pending</option>
-            <option>Reject</option>
+            <option>Status</option><option>All</option><option>Approve</option>
           </select>
 
-          <button onClick={() => setShowModal(true)} className="bg-[#8B0000] text-white px-4 py-2.5 rounded-md flex items-center justify-center gap-2 text-sm font-bold shadow-sm transition-all hover:bg-[#700000]">
+          <button disabled className="bg-gray-200 text-gray-400 px-4 py-2.5 rounded-md flex items-center justify-center gap-2 text-sm font-bold cursor-not-allowed">
             <Download size={18} /> Download
           </button>
         </div>
 
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm">
-            <thead className="bg-gray-50 text-gray-500 font-bold uppercase tracking-wider">
-              <tr>
-                <th className="px-6 py-4">S. No.</th>
-                <th className="px-6 py-4">Field Name</th>
-                <th className="px-6 py-4">Username</th>
-                <th className="px-6 py-4">User ID</th>
-                <th className="px-6 py-4">Admin Name</th>
-                <th className="px-6 py-4">Updated Date</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-100 text-gray-600">
-               {[1, 2, 3].map(i => (
-                 <tr key={i} className="hover:bg-gray-50 transition-colors">
-                   <td className="px-6 py-4">{i}</td>
-                   <td className="px-6 py-4">john_doe</td>
-                   <td className="px-6 py-4">john_doe</td>
-                   <td className="px-6 py-4">EMP92198</td>
-                   <td className="px-6 py-4 flex items-center gap-2">
-                     <div className="w-7 h-7 rounded-full bg-gray-200"></div> Carson Darrin
-                   </td>
-                   <td className="px-6 py-4">15.08.2024</td>
-                 </tr>
-               ))}
-            </tbody>
-          </table>
+        {/* --- PROFESSIONAL EMPTY STATE --- */}
+        <div className="flex flex-col items-center justify-center py-24 border-2 border-dashed border-gray-100 rounded-xl bg-gray-50/30">
+            <div className="w-16 h-16 bg-white shadow-sm rounded-full flex items-center justify-center mb-4">
+                <FileSearch className="text-gray-300" size={32} />
+            </div>
+            <h3 className="text-gray-800 font-bold text-lg">No Records Found</h3>
+            <p className="text-gray-400 text-sm max-w-sm text-center mt-1">
+                Onboarding analytics and detailed user reports will be available here once the current onboarding lifecycle is completed.
+            </p>
         </div>
       </div>
       <DownloadModal isOpen={showModal} onClose={() => setShowModal(false)} />
