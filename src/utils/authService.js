@@ -141,3 +141,22 @@ export const sendChangePasswordOtp = async (oldPassword, newPassword) => {
     }
   );
 };
+
+// ... existing imports ...
+
+/**
+ * Logout User
+ */
+export const performLogout = async () => {
+  const token = localStorage.getItem('access_token');
+  return await axios.post(
+    'https://services.iserveu.online/dev/nsdlab-internal/user-authorization/logout',
+    {},
+    {
+      headers: {
+        'Authorization': token,
+        'Content-Type': 'application/json'
+      }
+    }
+  );
+};

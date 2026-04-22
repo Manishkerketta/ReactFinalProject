@@ -73,19 +73,28 @@ const AuthSystem = () => {
     if (step === 'forgot') setUsername('');
   }, [step]);
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      localStorage.clear();
-      
-      const encryptedCreds = await getEncryptedData({
-        grant_type: "password",
-        username: username.trim(),
-        password: password.trim()
-      });
+  // Inside AuthSystem.jsx -> handleLogin function
 
-      const loginResp = await performBankLogin(encryptedCreds);
+const handleLogin = async (e) => {
+  e.preventDefault();
+  setLoading(true);
+  try {
+    localStorage.clear(); 
+
+    const encryptedCreds = await getEncryptedData({
+      grant_type: "password",
+      username: username.trim(),
+      password: password.trim()
+    });
+    
+    // Extract the raw payload string
+    const loginPayload = typeof encryptedCreds === 'object' ? encryptedCreds.RequestData : encryptedCreds;
+
+    // --- CRITICAL STEP: SAVE THIS PAYLOAD FOR THE REFRESH TIMER ---
+    localStorage.setItem('login_payload', loginPayload);
+
+    const loginResp = await performBankLogin(loginPayload);
+    // ... rest of your existing logic
       const loginDecrypted = await getDecryptedData(loginResp.data.RequestData || loginResp.data);
 
       if (loginDecrypted?.access_token) {

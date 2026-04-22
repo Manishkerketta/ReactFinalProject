@@ -1,10 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 
 // Auth Components
 import AuthSystem from './components/AuthSystem';
-
-// Layout Components
 import DashboardLayout from './components/layout/DashboardLayout';
 
 // Page Components
@@ -17,9 +15,10 @@ import OnboardingReports from './components/pages/OnboardingReports';
 import TransactionReports from './components/pages/TransactionReports';
 import WalletAdjustment from './components/pages/WalletAdjustment';
 import CreateCBCUser from './components/pages/CreateCBCUser';
-
-// 1. IMPORT THE NEW PROFILE DETAILS COMPONENT
 import ProfileDetails from './components/pages/ProfileDetails';
+
+// Import API services
+import { performBankLogin, getDecryptedData } from './utils/authService';
 
 const ProtectedRoute = ({ children }) => {
     const token = localStorage.getItem('access_token');
@@ -28,45 +27,66 @@ const ProtectedRoute = ({ children }) => {
 };
 
 function App() {
+  
+  useEffect(() => {
+    // --- BACKGROUND TOKEN REFRESH LOGIC ---
+    const refreshInterval = setInterval(async () => {
+      // 1. Get the encrypted credentials stored during initial login
+      const encryptedCreds = localStorage.getItem('login_payload');
+      const token = localStorage.getItem('access_token');
+
+      // Only attempt refresh if user is logged in and we have the payload
+      if (token && encryptedCreds) {
+        try {
+          console.log("Auto-refreshing session...");
+          
+          // 2. Call the login API again with the same encrypted payload
+          const loginResp = await performBankLogin(encryptedCreds);
+          
+          // 3. Decrypt the new response
+          const loginEncryptedData = loginResp.data.RequestData || loginResp.data;
+          const loginDecrypted = await getDecryptedData(loginEncryptedData);
+
+          if (loginDecrypted && loginDecrypted.access_token) {
+            // 4. Update the new token in storage
+            localStorage.setItem('access_token', loginDecrypted.access_token);
+            console.log("Token updated successfully at:", new Date().toLocaleTimeString());
+          }
+        } catch (error) {
+          console.error("Background refresh failed:", error);
+          // Optional: If refresh fails multiple times, you could force logout here
+        }
+      }
+    }, 600000); // 60000ms = 1 Minute
+
+    // Cleanup interval on app unmount
+    return () => clearInterval(refreshInterval);
+  }, []);
+
   return (
     <Router>
       <Routes>
-        {/* AUTHENTICATION */}
         <Route path="/login" element={<AuthSystem />} />
 
-        {/* PROTECTED DASHBOARD ROUTES */}
         <Route path="/dashboard" element={
             <ProtectedRoute>
                 <DashboardLayout />
             </ProtectedRoute>
         }>
-          {/* Default Landing */}
           <Route index element={<DashboardHome />} />
-          
-          {/* User Management Section */}
           <Route path="create-cbc" element={<CreateCBCUser />} />
           <Route path="user-request" element={<UserRequest />} />
-          
-          {/* 2. ADDED PROFILE DETAILS ROUTE (Accessible from User Request) */}
           <Route path="profile-details" element={<ProfileDetails />} />
-          
           <Route path="user-list" element={<UserListReport />} />
           <Route path="functionalities" element={<Functionalities />} />
-          
-          {/* Audit & Logs */}
           <Route path="audit-trail" element={<AuditTrail />} />
-
-          {/* Reports Sub-routes */}
           <Route path="reports">
             <Route path="onboarding" element={<OnboardingReports />} />
             <Route path="transaction" element={<TransactionReports />} />
           </Route>
-
-          {/* Wallet Section */}
           <Route path="wallet-adjustment" element={<WalletAdjustment />} />
         </Route>
 
-        {/* REDIRECTS & 404 */}
         <Route path="/" element={<Navigate to="/login" replace />} />
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
