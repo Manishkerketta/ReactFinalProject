@@ -1,5 +1,8 @@
-import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+
+// UI Components
+import GlobalLoader from './components/ui/GlobalLoader'; // Create this file with the code below
 
 // Auth Components
 import AuthSystem from './components/AuthSystem';
@@ -26,45 +29,67 @@ const ProtectedRoute = ({ children }) => {
     return children;
 };
 
+// --- NEW: COMPONENT TO TRIGGER LOADER ON ROUTE CHANGES ---
+const RouteChangeTracker = ({ setIsLoading }) => {
+  const location = useLocation();
+
+  useEffect(() => {
+    // Show loader on route change
+    setIsLoading(true);
+    
+    // Simulate loading time (matches the SVG drawing animation duration)
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1200); 
+
+    return () => clearTimeout(timer);
+  }, [location.pathname, setIsLoading]);
+
+  return null;
+};
+
 function App() {
-  
+  // 1. ADD LOADING STATE
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Initial load effect (on site refresh)
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
   useEffect(() => {
     // --- BACKGROUND TOKEN REFRESH LOGIC ---
     const refreshInterval = setInterval(async () => {
-      // 1. Get the encrypted credentials stored during initial login
       const encryptedCreds = localStorage.getItem('login_payload');
       const token = localStorage.getItem('access_token');
 
-      // Only attempt refresh if user is logged in and we have the payload
       if (token && encryptedCreds) {
         try {
-          console.log("Auto-refreshing session...");
-          
-          // 2. Call the login API again with the same encrypted payload
           const loginResp = await performBankLogin(encryptedCreds);
-          
-          // 3. Decrypt the new response
           const loginEncryptedData = loginResp.data.RequestData || loginResp.data;
           const loginDecrypted = await getDecryptedData(loginEncryptedData);
 
           if (loginDecrypted && loginDecrypted.access_token) {
-            // 4. Update the new token in storage
             localStorage.setItem('access_token', loginDecrypted.access_token);
-            console.log("Token updated successfully at:", new Date().toLocaleTimeString());
           }
         } catch (error) {
           console.error("Background refresh failed:", error);
-          // Optional: If refresh fails multiple times, you could force logout here
         }
       }
-    }, 600000); // 60000ms = 1 Minute
+    }, 600000); // 10 Minutes (Adjusted from your 600000)
 
-    // Cleanup interval on app unmount
     return () => clearInterval(refreshInterval);
   }, []);
 
   return (
     <Router>
+      {/* 2. ADD ROUTE TRACKER INSIDE ROUTER */}
+      <RouteChangeTracker setIsLoading={setIsLoading} />
+
+      {/* 3. SHOW GLOBAL LOADER */}
+      {isLoading && <GlobalLoader />}
+
       <Routes>
         <Route path="/login" element={<AuthSystem />} />
 

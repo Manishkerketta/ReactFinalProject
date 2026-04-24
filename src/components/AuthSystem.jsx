@@ -39,7 +39,7 @@ const CardWrapper = ({ children }) => (
     <div className="hidden lg:flex w-[55%] flex-col items-start justify-start p-16 bg-white border-r border-gray-50">
       <img src={nsdl_logo} alt="NSDL Payments Bank" className="w-[340px] mb-12" />
       
-      <div className="w-full max-w-[580px] aspect-[16/11] bg-[#F4F4F4] rounded-xl flex items-center justify-center relative overflow-hidden border border-gray-100 shadow-inner">
+      <div className="w-full max-w-[480px] aspect-[16/11] bg-[#F4F4F4] rounded-xl flex items-center justify-center relative overflow-hidden border border-gray-100 shadow-inner">
          <img 
             src={nsdl_watermark} 
             alt="Watermark" 
@@ -167,20 +167,20 @@ const AuthSystem = () => {
 
       {step === 'login' && (
         <CardWrapper>
-          <div className="mb-12 text-left">
-            <h2 className="text-[52px] font-bold text-[#1A1A1A] leading-tight mb-2 tracking-tight">Welcome Back!</h2>
-            <p className="text-[#5B6B79] text-xl font-medium">Please enter your details</p>
+          <div className="mb-6 text-left">
+            <h2 className="text-[32px] font-bold text-[#1A1A1A] leading-tight mb-2 tracking-tight">Welcome Back!</h2>
+            <p className="text-[#5B6B79] text-sm font-medium">Please enter your details</p>
           </div>
 
-          <form className="w-full space-y-8" onSubmit={handleLogin}>
+          <form className="w-full space-y-6" onSubmit={handleLogin}>
             <div className="relative border border-gray-300 rounded-[6px] focus-within:border-[#8B0000] focus-within:ring-0 transition-all">
-              <label className="absolute -top-2.5 left-3 bg-white px-1 text-[12px] font-bold text-gray-500 uppercase tracking-widest">Username*</label>
-              <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} className="w-full h-[60px] px-4 bg-transparent outline-none text-[16px] text-gray-800" placeholder="Enter your Username" required />
+              <label className="absolute -top-2.5 left-3 bg-white px-1 text-[8px] font-bold text-gray-500 uppercase tracking-widest">Username*</label>
+              <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} className="w-full h-[40px] px-4 bg-transparent outline-none text-[16px] text-gray-800" placeholder="Enter your Username" required />
             </div>
 
             <div className="relative border border-gray-300 rounded-[6px] focus-within:border-[#8B0000] transition-all">
-              <label className="absolute -top-2.5 left-3 bg-white px-1 text-[12px] font-bold text-gray-500 uppercase tracking-widest">Password*</label>
-              <input type={showPassword ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)} className="w-full h-[60px] px-4 bg-transparent outline-none text-[16px] text-gray-800" placeholder="Enter your password" required />
+              <label className="absolute -top-2.5 left-3 bg-white px-1 text-[8px] font-bold text-gray-500 uppercase tracking-widest">Password*</label>
+              <input type={showPassword ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)} className="w-full h-[40px] px-4 bg-transparent outline-none text-[16px] text-gray-800" placeholder="Enter your password" required />
               <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-700">
                 {showPassword ? <EyeOff size={22} /> : <Eye size={22} />}
               </button>
@@ -193,7 +193,7 @@ const AuthSystem = () => {
               <button type="button" onClick={() => setStep('forgot')} className="text-[#1A1A1A] font-bold hover:underline">Forgot Password?</button>
             </div>
 
-            <button type="submit" disabled={loading} className="w-full h-[60px] bg-[#8B0000] text-white font-bold rounded-[6px] hover:bg-[#700000] transition-all flex items-center justify-center text-[20px] uppercase tracking-widest shadow-md">
+            <button type="submit" disabled={loading} className="w-full h-[40px] bg-[#8B0000] text-white font-bold rounded-[6px] hover:bg-[#700000] transition-all flex items-center justify-center text-[15px] uppercase tracking-widest shadow-md">
               {loading ? <Loader2 className="animate-spin" size={26} /> : "Login"}
             </button>
           </form>

@@ -160,3 +160,25 @@ export const performLogout = async () => {
     }
   );
 };
+
+// ... existing code ...
+
+/**
+ * Fetch City, State, District via Pincode
+ * @param {string} pincode 
+ */
+export const fetchLocationByPin = async (pincode) => {
+  try {
+    const response = await axios.post('https://services.txninfra.com/isu/pincode/getCityStateDistrictAndroid', 
+      { pin: pincode },
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
